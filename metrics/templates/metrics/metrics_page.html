@@ -1,0 +1,63 @@
+{% extends "core/base.html" %}
+
+{% load static from staticfiles %}
+{% load wagtailcore_tags %}
+{% load wiki_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static "wiki/css/wiki.scss" %}" />
+<link rel="stylesheet" type="text/x-scss" href="{% static "metrics/css/metrics.scss" %}" />
+{% endblock %}
+
+{% if self.metrics %}
+{% block extra_js %}
+<script src="{% static "metrics/js/plotly-latest.min.js" %}"></script>
+<script>
+    {% for name, group in self.metrics.iteritems %}
+    var {{ name }} = {
+        name: "{{ group.title }}",
+        mode: "lines",
+        x: [{% for sample in group.data %}"{{ sample.timestamp }}", {% endfor %}],
+        y: [{% for sample in group.data %}{{ sample.volume }}, {% endfor %}],
+
+    }
+    {% endfor %}
+
+    var data = [{% for name, samples in self.metrics.iteritems %}{{ name }}, {% endfor %}]
+    var layout = {
+        showlegend: true,
+        margin: {
+          l: 50,
+          r: 10,
+          b: 50,
+          t: 10,
+          pad: 4
+        },
+    };
+
+    Plotly.newPlot('chart_container', data, layout, {displayModeBar: false});
+</script>
+{% endblock %}
+{% endif %}
+
+{% block body_class %}wiki-body{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}
+
+{% block content %}
+  {% if self.metrics %}
+    <div id="chart_container" class="metrics-graph">
+    </div>
+  {% endif %}
+  {% if self.content %}
+      <hr>
+      <div class="wiki-content">
+      {% for block in page.content %}
+          {% include_block block %}
+      {% endfor %}
+      </div>
+  {% endif %}
+{% endblock %}

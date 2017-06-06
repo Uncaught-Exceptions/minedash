@@ -1,0 +1,34 @@
+{% load wagtailcore_tags %}
+
+{% if players %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title ng-binding">
+            <span class="glyphicon glyphicon-user"></span>
+            Players Online: {{ players.online }}/{{ players.max }}
+        </h3>
+    </div>
+    <ul class="list-group" >
+        {% if players.list %}
+        {% for player in players.list %}<li class="list-group-item">{{ player.name }}</li>{% endfor %}
+        {% else %}
+        <li class="list-group-item">No one online</li>
+        {% endif %}
+    </ul>
+</div>
+{% else %}
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title ng-binding">
+            <span class="glyphicon glyphicon-user"></span>
+            Players Online: n/a
+        </h3>
+    </div>
+    <div class="panel-body" >
+      <p>
+        Unable to talk to server.
+      </p>
+    </div>
+
+</div>
+{% endif %}

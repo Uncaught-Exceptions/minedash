@@ -1,0 +1,39 @@
+{% load wagtailcore_tags %}
+
+{% if active %}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title ng-binding">
+            <span class="glyphicon glyphicon-cog"></span>
+            Server Details
+        </h3>
+    </div>
+    <div class="panel-body" >
+      <dt>url:</dt>
+      <dd>{{ server }}</dd>
+      <dt>status:</dt>
+      <dd>active</dd>
+      <dt>minecraft version:</dt>
+      <dd>{{ version }}</dd>
+      <dt>description:</dt>
+      <dd>{{ description }}</dd>
+      <dt>number of mods:</dt>
+      <dd>{{ mods }}</dd>
+    </div>
+</div>
+{% else %}
+<div class="panel panel-danger">
+  <div class="panel-heading">
+      <h3 class="panel-title ng-binding">
+          <span class="glyphicon glyphicon-cog"></span>
+          Server Details
+      </h3>
+  </div>
+  <div class="panel-body" >
+    <dt>url:</dt>
+    <dd>{{ server }}</dd>
+    <dt>status:</dt>
+    <dd>down</dd>
+  </div>
+</div>
+{% endif %}

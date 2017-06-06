@@ -1,0 +1,36 @@
+{% load core_tags wagtailcore_tags %}
+{% load menu_tags %}
+
+<nav class="navbar navbar-default">
+   <div class="container-fluid">
+        <div class="navbar-header">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse sub-menu-nav">
+            <ul class="nav navbar-nav">
+            {% for item in menu_items %}
+              <li class="{{ item.active_class }}{% if item.has_children_in_menu %} dropdown{% endif %}">
+                  {% if item.has_children_in_menu %}
+                  <a href="{{ item.href }}" class="dropdown-toggle"
+                    id="ddtoggle_{{ item.link_page.pk }}" data-toggle="dropdown"
+                    data-hover="dropdown" data-delay="200" data-close-others="true"
+                    aria-haspopup="true" aria-expanded="false">
+                    /{{ item.text }} <span class="caret"></span>
+                  </a>
+                  {% else %}
+                  <a href="{{ item.href }}">/{{ item.text }}</a>
+                  {% endif %}
+                  {% if item.has_children_in_menu  %}
+                      {% sub_menu item %}
+                  {% endif %}
+              </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

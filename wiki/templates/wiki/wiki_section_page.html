@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+
+{% load static from staticfiles %}
+{% load wagtailcore_tags %}
+{% load wiki_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/x-scss" href="{% static "wiki/css/wiki.scss" %}" />
+{% endblock %}
+
+{% block body_class %}wiki-body{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}
+
+{% block content %}
+    {% if self.content %}
+        <div class="wiki-content markdown">
+            {{ self.content|markdown }}
+        </div>
+    {% endif %}
+    {% section_listing calling_page=self %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+      $('.equal-height-panels .panel').matchHeight();
+  });
+</script>
+{% endblock %}

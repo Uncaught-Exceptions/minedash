@@ -1,0 +1,17 @@
+{% if related_links %}
+<div class="panel panel-default related-links">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+          <span class="glyphicon glyphicon-link"></span>
+          Related links
+        </h3>
+    </div>
+    <ul class="list-group">
+    {% for related_link in related_links %}
+        <li class="list-group-item">
+          <a href="{{ related_link.link }}">{{ related_link.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}

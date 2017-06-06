@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}article-body{% endblock %}
+
+{% block sidebar %}
+{{ block.super }}
+{% include "core/includes/related_links.html" with related_links=self.related_links.all only %}
+{% endblock %}
+
+{% block content %}
+    {% if self.content %}
+        <div class="rich-content">
+            {{ self.content|richtext }}
+        </div>
+    {% endif %}
+{% endblock %}

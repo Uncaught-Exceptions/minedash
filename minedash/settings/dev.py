@@ -19,7 +19,7 @@ DATABASES = {
 
 # Minecraft server
 MINECRAFT_SERVER_URL = "10.1.1.10"
-
+MINECRAFT_WHITELIST_LOCATION = "whitelist.json"
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "MineDash"

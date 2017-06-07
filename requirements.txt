@@ -1,12 +1,12 @@
 Django>=1.11,<1.12
 djangorestframework>=3.3.3
 wagtail>=1.10
-wagtailmenus
+wagtailmenus>=2.2.2
 django-bootstrap3>=7.1.0
 django-libsass>=0.7
 django-modelcluster>=3.0
 django-overextends>=0.4.2
-django-storage-swift
+django-storage-swift>=1.2.17
 elasticsearch>=1.2.0
 libsass>=0.8.2
 Pillow>=3.2.0
@@ -16,3 +16,5 @@ mcstatus>=2.1
 psutil>=4.1.0
 markdown>=2.6.8
 pymdown-extensions>=3.4
+django-recaptcha>=1.3.0
+requests>==2.17.3

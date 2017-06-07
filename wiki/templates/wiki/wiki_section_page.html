@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block extra_js %}
+<script src="{% static "wiki/js/jquery.matchHeight-min.js" %}" ></script>
 <script>
 $(document).ready(function() {
       $('.equal-height-panels .panel').matchHeight();

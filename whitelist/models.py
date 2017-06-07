@@ -20,7 +20,7 @@ from wagtailmenus.models import MenuPage
 
 class Whitelisted(models.Model):
     username = models.CharField(max_length=16)
-    uuid = models.CharField(max_length=32)
+    uuid = models.UUIDField()
     email = models.EmailField()
     approved = models.BooleanField(default=False)
     approved_on = models.DateTimeField(
@@ -52,7 +52,8 @@ class Whitelisted(models.Model):
                     raise forms.ValidationError(
                         'Already whitelisted')
             if not found:
-                whitelist.append({'name': self.username, 'id': self.uuid})
+                whitelist.append(
+                    {'name': self.username, 'uuid': str(self.uuid)})
 
             with open(settings.MINECRAFT_WHITELIST_LOCATION, "w") as f:
                 f.write(json.dumps(whitelist))
@@ -81,6 +82,11 @@ class SignUpForm(forms.Form):
         max_length=500,
         widget=forms.Textarea)
     captcha = ReCaptchaField(label='')
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+        if not settings.RECAPTCHA_PUBLIC_KEY:
+            self.fields.pop('captcha')
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -137,7 +143,8 @@ class SignUpPage(AbstractForm, MenuPage):
             form = SignUpForm(request.POST)
 
             if form.is_valid():
-                form.fields.pop('captcha')
+                if settings.RECAPTCHA_PUBLIC_KEY:
+                    form.fields.pop('captcha')
                 self.process_form_submission(form)
 
                 if self.to_address:

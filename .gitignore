@@ -1,0 +1,7 @@
+*~
+.venv/
+venv/
+*.pyc
+*.sqlite3
+static/CACHE/
+media/
